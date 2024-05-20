@@ -7,7 +7,6 @@ class Children extends Clothes {
         super(name, price);
         this.sale = sale;
     }
-
     public int getPriceWithSale() {
         return Math.round(getPrice() * (1 - (float)this.sale / 100));
     }

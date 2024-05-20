@@ -1,5 +1,7 @@
 package com.shop.user;
 
+import com.shop.utils.Constants;
+
 public class User {
     private String username;
     private String password;
@@ -18,6 +20,6 @@ public class User {
     }
 
     public void loginSuccess(){
-        System.out.println("You have successfully logged in as a user!");
+        System.out.println(Constants.LOGIN_SUCCESS);
     }
 }

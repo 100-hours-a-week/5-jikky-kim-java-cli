@@ -7,6 +7,7 @@ import com.shop.clothes.Woman;
 import com.shop.user.Admin;
 import com.shop.user.Customer;
 import com.shop.user.User;
+import com.shop.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +43,9 @@ public class Pos {
     }
 
     public User login(Scanner scanner) {
-        System.out.print("Enter username: ");
+        System.out.print(Constants.ENTER_USERNAME);
         String username = scanner.next();
-        System.out.print("Enter password: ");
+        System.out.print(Constants.ENTER_PASSWORD);
         String password = scanner.next();
 
         for (User user : users) {
@@ -53,27 +54,23 @@ public class Pos {
                 return user;
             }
         }
-        System.out.println("Login failed! Invalid username or password.");
+        System.out.println(Constants.LOGIN_FAILED);
         return null;
     }
 
     public void showMenu(User user) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Welcome to the KCS Clothing Shop");
-            System.out.println("-------------------------");
-            System.out.println("1. View Inventory");
-            System.out.println("2. Add Item to Cart");
-            System.out.println("3. View Cart");
-            System.out.println("4. Checkout");
+            System.out.println(Constants.WELCOME_MESSAGE);
+            System.out.println(Constants.DEVIDE_LINE);
+            System.out.println(Constants.MAIN_MENU_OPTIONS);
             if (user instanceof Admin) {
-                System.out.println("5. Manage Inventory");
-                System.out.println("6. Exit");
+                System.out.println(Constants.ADMIN_MENU_OPTIONS);
             } else {
-                System.out.println("5. Exit");
+                System.out.println(Constants.CUSTOMER_MENU_OPTIONS);
             }
-            System.out.println("-------------------------");
-            System.out.print("Please select an option: ");
+            System.out.println(Constants.DEVIDE_LINE);
+            System.out.print(Constants.SELECT_OPTION);
             int choice = scanner.nextInt();
 
             switch (choice) {
@@ -93,25 +90,25 @@ public class Pos {
                     if (user instanceof Admin) {
                         ((Admin) user).manageInventory(scanner, this);
                     } else {
-                        System.out.println("Thank you for using the POS System. Goodbye!");
+                        System.out.println(Constants.EXIT_MESSAGE);
                         scanner.close();
                         return;
                     }
                     break;
                 case 6:
                     if (user instanceof Admin) {
-                        System.out.println("Thank you for using the POS System. Goodbye!");
+                        System.out.println(Constants.EXIT_MESSAGE);
                         scanner.close();
                         return;
                     }
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println(Constants.INVALID_CHOICE);
             }
         }
     }
 
     private void viewInventory() {
-        System.out.println("Inventory:");
+        System.out.println(Constants.INVENTORY_HEADER);
         for (int i = 0; i < inventory.size(); i++) {
             System.out.print((i + 1) + ". ");
             inventory.get(i).displayInfo();
@@ -119,18 +116,18 @@ public class Pos {
     }
 
     private void addItemToCart(Scanner scanner) {
-        System.out.print("Enter the item number to add to cart: ");
+        System.out.print(Constants.ADD_ITEM_PROMPT);
         int itemNumber = scanner.nextInt();
         if (itemNumber > 0 && itemNumber <= inventory.size()) {
             cart.add(inventory.get(itemNumber - 1));
-            System.out.println("Item added to cart.");
+            System.out.println(Constants.ITEM_ADDED_TO_CART);
         } else {
-            System.out.println("Invalid item number. Please try again.");
+            System.out.println(Constants.INVALID_ITEM_NUMBER);
         }
     }
 
     private void viewCart() {
-        System.out.println("Cart:");
+        System.out.println(Constants.CART_HEADER);
         for (Clothes item : cart) {
             item.displayInfo();
         }
@@ -138,7 +135,7 @@ public class Pos {
 
     private void checkout() {
         int total = 0;
-        System.out.println("Checkout:");
+        System.out.println(Constants.CHECKOUT_HEADER);
         for (Clothes item : cart) {
             item.displayInfo();
             if (item instanceof Children) {
@@ -147,24 +144,24 @@ public class Pos {
                 total += item.getPrice();
             }
         }
-        System.out.println("Total : " + total + "won");
-        System.out.println("Thank you!");
-        System.out.println("");
+        System.out.println(Constants.TOTAL_HEADER + total + Constants.WON);
+        System.out.println(Constants.CHECKOUT_THANK);
+        System.out.println(Constants.EMPTY);
         cart.clear();
     }
 
     public void addInventoryItem(Scanner scanner) {
-        System.out.print("Enter the type of item (1. Children, 2. Man, 3. Woman): ");
+        System.out.print(Constants.ENTER_TYPE_OF_ITEM);
         int type = scanner.nextInt();
         scanner.nextLine();
-        System.out.print("Enter the name of the item: ");
+        System.out.print(Constants.ENTER_NAME_OF_ITEM);
         String name = scanner.nextLine();
-        System.out.print("Enter the price of the item: ");
+        System.out.print(Constants.ENTER_PRICE_OF_ITEM);
         int price = scanner.nextInt();
 
         Clothes newItem = null;
         if (type == 1) {
-            System.out.print("Enter the sale percentage: ");
+            System.out.print(Constants.ENTER_SALE_PERCENTAGE);
             int sale = scanner.nextInt();
             newItem = new Children(name, price, sale);
         } else if (type == 2) {
@@ -175,20 +172,20 @@ public class Pos {
 
         if (newItem != null) {
             inventory.add(newItem);
-            System.out.println("Item added to inventory.");
+            System.out.println(Constants.ITEM_ADDED_TO_INVENTORY);
         } else {
-            System.out.println("Invalid type. Item not added.");
+            System.out.println(Constants.ITEM_NOT_ADDED);
         }
     }
 
     public void removeInventoryItem(Scanner scanner) {
-        System.out.print("Enter the item number to remove from inventory: ");
+        System.out.print(Constants.ENTER_ITEM_NUMBER_TO_REMOVE);
         int itemNumber = scanner.nextInt();
         if (itemNumber > 0 && itemNumber <= inventory.size()) {
             inventory.remove(itemNumber - 1);
-            System.out.println("Item removed from inventory.");
+            System.out.println(Constants.ITEM_REMOVED_FROM_INVENTORY);
         } else {
-            System.out.println("Invalid item number. Please try again.");
+            System.out.println(Constants.INVALID_ITEM_NUMBER);
         }
     }
 }

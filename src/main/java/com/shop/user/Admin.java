@@ -1,5 +1,6 @@
 package com.shop.user;
 import com.shop.pos.Pos;
+import com.shop.utils.Constants;
 
 import java.util.Scanner;
 
@@ -9,15 +10,12 @@ public class Admin extends User {
     }
     @Override
     public void loginSuccess(){
-        System.out.println("You have successfully logged in as a admin!");
+        System.out.println(Constants.LOGIN_SUCCESS_ADMIN);
     }
     public void manageInventory(Scanner scanner, Pos pos) {
         while (true) {
-            System.out.println("Inventory Management:");
-            System.out.println("1. Add Item");
-            System.out.println("2. Remove Item");
-            System.out.println("3. Back to Main Menu");
-            System.out.print("Please select an option: ");
+            System.out.println(Constants.INVENTORY_MANAGEMENT_OPTIONS);
+            System.out.print(Constants.SELECT_OPTION);
             int choice = scanner.nextInt();
 
             switch (choice) {
@@ -30,7 +28,7 @@ public class Admin extends User {
                 case 3:
                     return;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println(Constants.INVALID_CHOICE);
             }
         }
     }

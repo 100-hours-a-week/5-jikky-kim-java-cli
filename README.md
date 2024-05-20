@@ -19,27 +19,16 @@
 
 ## 클래스 설계도
 
-### Clothes
+| Clothes | User | 
+|:---|:---|
+|![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/a4d40914-ccf5-4ae3-a804-10db4d2ff605)|![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/e0669f6f-5784-44f8-ae75-6168a176a760)|
+|슈퍼 클래스 : Clothes|슈퍼 클래스 : User|
+|  서브 클래스 : Children, Adult|  서브 클래스 : Customer, Admin|
+|슈퍼 클래스 : Adult||
+|  서브 클래스 : Man, Woman||
 
-![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/a4d40914-ccf5-4ae3-a804-10db4d2ff605)
-
-
-- 슈퍼 클래스 : Clothes
-    
-    서브 클래스 : Children, Adult
-    
-- 슈퍼 클래스 : Adult
-    
-    서브 클래스 : Man, Woman
-    
-
-### User
-
-![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/e0669f6f-5784-44f8-ae75-6168a176a760)
-
-
-- 슈퍼 클래스 : User
-- 서브 클래스 : Customer, Admin
+- 로그아웃
+- 프로그램 종료
 
 ### Pos
 

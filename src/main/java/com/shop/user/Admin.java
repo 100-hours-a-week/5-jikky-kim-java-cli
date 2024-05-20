@@ -1,8 +1,9 @@
-package com.clothes;
+package com.shop.user;
+import com.shop.pos.Pos;
 
 import java.util.Scanner;
 
-class Admin extends User {
+public class Admin extends User {
     public Admin(String username, String password) {
         super(username, password);
     }

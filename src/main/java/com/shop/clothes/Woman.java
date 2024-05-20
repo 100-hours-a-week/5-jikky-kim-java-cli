@@ -1,6 +1,6 @@
-package com.clothes;
+package com.shop.clothes;
 
-class Woman extends Adult {
+public class Woman extends Adult {
     public Woman(String name, int price) {
         super(name, price);
     }

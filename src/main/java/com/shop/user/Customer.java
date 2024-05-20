@@ -1,6 +1,6 @@
-package com.clothes;
+package com.shop.user;
 
-class Customer extends User {
+public class Customer extends User {
     public Customer(String username, String password) {
         super(username, password);
     }

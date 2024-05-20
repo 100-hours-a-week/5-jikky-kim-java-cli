@@ -1,6 +1,6 @@
-package com.clothes;
+package com.shop.clothes;
 
-class Children extends Clothes {
+public class Children extends Clothes {
     private int sale;
 
     public Children(String name, int price, int sale) {

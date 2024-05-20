@@ -1,6 +1,6 @@
-package com.clothes;
+package com.shop.clothes;
 
-class Clothes {
+public class Clothes {
     private String name;
     private int price;
 

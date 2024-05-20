@@ -1,10 +1,18 @@
-package com.clothes;
+package com.shop.pos;
+
+import com.shop.clothes.Children;
+import com.shop.clothes.Clothes;
+import com.shop.clothes.Man;
+import com.shop.clothes.Woman;
+import com.shop.user.Admin;
+import com.shop.user.Customer;
+import com.shop.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class Pos {
+public class Pos {
     // 재고 목록
     private List<Clothes> inventory;
     // 장바구니 목록
@@ -52,7 +60,7 @@ class Pos {
     public void showMenu(User user) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Welcome to the KCS Clothing Shop Pos");
+            System.out.println("Welcome to the KCS Clothing Shop");
             System.out.println("-------------------------");
             System.out.println("1. View Inventory");
             System.out.println("2. Add Item to Cart");

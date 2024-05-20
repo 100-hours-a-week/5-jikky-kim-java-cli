@@ -1,6 +1,6 @@
-package com.clothes;
+package com.shop.user;
 
-class User {
+public class User {
     private String username;
     private String password;
 

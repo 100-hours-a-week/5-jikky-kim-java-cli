@@ -16,10 +16,6 @@ public class Clothes {
     public int getPrice() {
         return price;
     }
-    public int setPrice(int price) {
-        this.price = price;
-        return price;
-    }
 
     public void displayInfo() {
         System.out.println("Name: " + name + ", Price: " + price);

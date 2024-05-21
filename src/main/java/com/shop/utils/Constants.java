@@ -2,7 +2,7 @@ package com.shop.utils;
 
 public class Constants {
     public static final String WELCOME_MESSAGE = "Welcome to KCS SHOP";
-    public static final String MAIN_MENU_OPTIONS = "1. View Inventory\n2. Add Item to Cart\n3. View Cart\n4. Checkout\n";
+    public static final String MAIN_MENU_OPTIONS = "1. View Inventory\n2. Add Item to Cart\n3. View Cart\n4. Checkout";
     public static final String ADMIN_MENU_OPTIONS = "5. Manage Inventory\n6. Exit";
     public static final String CUSTOMER_MENU_OPTIONS = "5. Exit";
     public static final String DEVIDE_LINE = "-------------------------";
@@ -22,9 +22,8 @@ public class Constants {
     public static final String CHECKOUT_THANK = "Thank you for buying!";
     public static final String TOTAL_HEADER = "Total: ";
     public static final String WON = "won";
-    public static final String EMPTY = "";
     public static final String EXIT_MESSAGE = "Thank you for using the POS System. Goodbye!";
-    public static final String INVENTORY_MANAGEMENT_OPTIONS = "Inventory Management:\n1. Add Item\n2. Remove Item\n3.Back to Main Menu";
+    public static final String INVENTORY_MANAGEMENT_OPTIONS = "Inventory Management:\n1. Add Item\n2. Remove Item\n3. Back to Main Menu";
     public static final String ENTER_TYPE_OF_ITEM = "Enter the type of item (1. Children, 2. Man, 3. Woman): ";
     public static final String ENTER_NAME_OF_ITEM = "Enter the name of the item: ";
     public static final String ENTER_PRICE_OF_ITEM = "Enter the price of the item: ";

@@ -1,29 +1,30 @@
 package com.shop.user;
-import com.shop.pos.Pos;
+import com.shop.services.InputService;
+import com.shop.services.InventoryService;
 import com.shop.utils.Constants;
-
-import java.util.Scanner;
 
 public class Admin extends User {
     public Admin(String username, String password) {
         super(username, password);
     }
+
     @Override
     public void loginSuccess(){
         System.out.println(Constants.LOGIN_SUCCESS_ADMIN);
     }
-    public void manageInventory(Scanner scanner, Pos pos) {
+
+    public void manageInventory(InputService inputService, InventoryService inventoryService) {
         while (true) {
             System.out.println(Constants.INVENTORY_MANAGEMENT_OPTIONS);
             System.out.print(Constants.SELECT_OPTION);
-            int choice = scanner.nextInt();
+            int choice = inputService.getIntInput();
 
             switch (choice) {
                 case 1:
-                    pos.addInventoryItem(scanner);
+                    inventoryService.addItemToInventory(inputService);
                     break;
                 case 2:
-                    pos.removeInventoryItem(scanner);
+                    inventoryService.removeItemFromInventory(inputService);
                     break;
                 case 3:
                     return;

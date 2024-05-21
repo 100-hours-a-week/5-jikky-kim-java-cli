@@ -28,19 +28,11 @@
 |  서브 클래스 : Man, Woman||
 
 
-### Pos
-
-- Main 클래스는 Pos 객체를 생성하고 프로그램을 실행
-    - Pos 객체와 연관 관계
-- Pos 클래스는  **`InventoryService`**, **`CartService`**, **`UserManager`**, **`InputService`** 객체에 의존
-
-![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/7eede99f-af60-4ea6-9321-024d78f1defb)
-
-
-### InputService
-- ScannerInputService가 inputService인터페이스를 구현
-
-![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/49d33231-633c-4079-8f6b-cbf97a2dae0a)
+| Pos | InputService | 
+|:---|:---|
+|![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/7eede99f-af60-4ea6-9321-024d78f1defb)|![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/49d33231-633c-4079-8f6b-cbf97a2dae0a)|
+|Main 클래스는 Pos 객체를 생성하고 프로그램을 실행. Pos 객체와 연관 관계|ScannerInputService가 inputService인터페이스를 구현|
+|Pos 클래스는  **`InventoryService`**, **`CartService`**, **`UserManager`**, **`InputService`** 객체에 의존|  |
 
 
 ## 폴더 구조

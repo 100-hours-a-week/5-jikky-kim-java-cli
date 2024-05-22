@@ -1,11 +1,11 @@
-package com.shop.services;
+package com.shop.utils;
 
 import java.util.Scanner;
 
-public class ScannerInputService implements InputService {
+public class InputServiceImpl implements InputService {
     private final Scanner scanner;
 
-    public ScannerInputService() {
+    public InputServiceImpl() {
         scanner = new Scanner(System.in);
     }
 

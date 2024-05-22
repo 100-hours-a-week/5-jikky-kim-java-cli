@@ -1,4 +1,4 @@
-package com.shop.services;
+package com.shop.utils;
 
 public interface InputService {
     String getInput();

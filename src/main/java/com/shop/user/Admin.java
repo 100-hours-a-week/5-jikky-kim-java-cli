@@ -1,5 +1,5 @@
 package com.shop.user;
-import com.shop.services.InputService;
+import com.shop.utils.InputService;
 import com.shop.services.InventoryService;
 import com.shop.utils.Constants;
 

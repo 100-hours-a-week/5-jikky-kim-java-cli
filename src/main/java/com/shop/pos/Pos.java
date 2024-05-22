@@ -1,46 +1,35 @@
 package com.shop.pos;
 
+import com.shop.services.CartService;
+import com.shop.services.InventoryService;
+import com.shop.services.UserService;
 import com.shop.user.Admin;
 import com.shop.user.User;
 import com.shop.utils.Constants;
-import com.shop.services.InputService;
-import com.shop.services.InventoryService;
-import com.shop.services.CartService;
-import com.shop.managers.InventoryManager;
-import com.shop.managers.CartManager;
-import com.shop.managers.UserManager;
+import com.shop.utils.InputService;
 
 public class Pos {
     private final InventoryService inventoryService;
     private final CartService cartService;
-    private final UserManager userManager;
+    private final UserService userService;
     private final InputService inputService;
 
-    public Pos(InputService inputService) {
-        InventoryManager inventoryManager = new InventoryManager();
-        CartManager cartManager = new CartManager();
-        this.inventoryService = new InventoryService(inventoryManager);
-        this.cartService = new CartService(cartManager, inventoryManager);
-        this.userManager = new UserManager();
+    public Pos(InputService inputService, InventoryService inventoryService, CartService cartService, UserService userService) {
+        this.inventoryService = inventoryService;
+        this.cartService = cartService;
+        this.userService = userService;
         this.inputService = inputService;
     }
 
-    public void run() {
-        User user = login();
-        if (user != null) {
-            showMenu(user);
-        }
-    }
-
-    private User login() {
+    public User login() {
         System.out.print(Constants.ENTER_USERNAME);
         String username = inputService.getInput();
         System.out.print(Constants.ENTER_PASSWORD);
         String password = inputService.getInput();
-        return userManager.login(username, password);
+        return userService.login(username, password);
     }
 
-    private void showMenu(User user) {
+    public void showMenu(User user) {
         while (true) {
             System.out.println(Constants.WELCOME_MESSAGE);
             System.out.println(Constants.DEVIDE_LINE);
@@ -76,11 +65,8 @@ public class Pos {
                     }
                     break;
                 case 6:
-                    if (user instanceof Admin) {
-                        System.out.println(Constants.EXIT_MESSAGE);
-                        return;
-                        }
-                        break;
+                    System.out.println(Constants.EXIT_MESSAGE);
+                    return;
                 default:
                     System.out.println(Constants.INVALID_CHOICE);
             }

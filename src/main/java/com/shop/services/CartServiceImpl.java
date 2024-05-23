@@ -3,7 +3,7 @@ package com.shop.services;
 import com.shop.managers.CartManager;
 import com.shop.managers.InventoryManager;
 import com.shop.clothes.Clothes;
-import com.shop.clothes.Children;
+import com.shop.clothes.ChildrenClothes;
 import com.shop.utils.Constants;
 import com.shop.utils.InputService;
 
@@ -42,8 +42,8 @@ public class CartServiceImpl implements CartService {
         System.out.println(Constants.CHECKOUT_HEADER);
         for (Clothes item : cartManager.getCart()) {
             item.displayInfo();
-            if (item instanceof Children) {
-                total += ((Children) item).getPriceWithSale();
+            if (item instanceof ChildrenClothes) {
+                total += ((ChildrenClothes) item).getPriceWithSale();
             } else {
                 total += item.getPrice();
             }

@@ -1,7 +1,7 @@
 package com.shop.clothes;
 
-public class Man extends Adult {
-    public Man(String name, int price) {
+public class ManClothes extends AdultClothes {
+    public ManClothes(String name, int price) {
         super(name, price);
     }
 

@@ -1,9 +1,9 @@
 package com.shop.clothes;
 
-public class Children extends Clothes {
+public class ChildrenClothes extends Clothes {
     private int sale;
 
-    public Children(String name, int price, int sale) {
+    public ChildrenClothes(String name, int price, int sale) {
         super(name, price);
         this.sale = sale;
     }

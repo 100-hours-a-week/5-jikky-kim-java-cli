@@ -2,9 +2,9 @@ package com.shop.services;
 
 import com.shop.managers.InventoryManager;
 import com.shop.clothes.Clothes;
-import com.shop.clothes.Children;
-import com.shop.clothes.Man;
-import com.shop.clothes.Woman;
+import com.shop.clothes.ChildrenClothes;
+import com.shop.clothes.ManClothes;
+import com.shop.clothes.WomanClothes;
 import com.shop.utils.Constants;
 import com.shop.utils.InputService;
 
@@ -30,11 +30,11 @@ public class InventoryServiceImpl implements InventoryService {
         if (type == 1) {
             System.out.print(Constants.ENTER_SALE_PERCENTAGE);
             int sale = inputService.getIntInput();
-            newItem = new Children(name, price, sale);
+            newItem = new ChildrenClothes(name, price, sale);
         } else if (type == 2) {
-            newItem = new Man(name, price);
+            newItem = new ManClothes(name, price);
         } else if (type == 3) {
-            newItem = new Woman(name, price);
+            newItem = new WomanClothes(name, price);
         } else {
             System.out.println(Constants.INVALID_CHOICE);
             return;

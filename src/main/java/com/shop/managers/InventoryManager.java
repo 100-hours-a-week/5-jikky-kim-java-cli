@@ -1,9 +1,9 @@
 package com.shop.managers;
 
-import com.shop.clothes.Children;
+import com.shop.clothes.ChildrenClothes;
 import com.shop.clothes.Clothes;
-import com.shop.clothes.Man;
-import com.shop.clothes.Woman;
+import com.shop.clothes.ManClothes;
+import com.shop.clothes.WomanClothes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +17,12 @@ public class InventoryManager {
     }
 
     private void initInventory() {
-        inventory.add(new Children("Shirt", 15000,20));
-        inventory.add(new Man("Jeans", 49900));
-        inventory.add(new Man("Shirt", 29000));
-        inventory.add(new Man("Suit", 120000));
-        inventory.add(new Woman("Dress", 39900));
-        inventory.add(new Woman("Pants", 13900));
+        inventory.add(new ChildrenClothes("Shirt", 15000,20));
+        inventory.add(new ManClothes("Jeans", 49900));
+        inventory.add(new ManClothes("Shirt", 29000));
+        inventory.add(new ManClothes("Suit", 120000));
+        inventory.add(new WomanClothes("Dress", 39900));
+        inventory.add(new WomanClothes("Pants", 13900));
     }
 
     public void addInventoryItem(Clothes item) {

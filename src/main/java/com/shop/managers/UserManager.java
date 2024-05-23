@@ -3,7 +3,6 @@ package com.shop.managers;
 import com.shop.user.Admin;
 import com.shop.user.Customer;
 import com.shop.user.User;
-import com.shop.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;

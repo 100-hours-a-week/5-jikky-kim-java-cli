@@ -34,6 +34,24 @@ public class Constants {
     public static final String ITEM_REMOVED_FROM_INVENTORY = "Item removed from inventory.";
     public static final String INVALID_CHOICE = "Invalid choice. Please try again.";
 
+    //    메뉴
+    public static final int DISPLAY_INVENTORY = 1;
+    public static final int ADD_ITEM_TO_CART = 2;
+    public static final int VIEW_CART = 3;
+    public static final int CHECKOUT = 4;
+    public static final int MANAGE_INVENTORY = 5;
+    public static final int EXIT = 6;
+
+    // 의류
+    public static final int CHILDREN_CLOTHES = 1;
+    public static final int MAN_CLOTHES = 2;
+    public static final int WOMAN_CLOTHES = 3;
+
+    // 인벤토리 메뉴
+    public static final int INVENTORY_ADD_ITEM = 1;
+    public static final int INVENTORY_REMOVE_ITEM = 2;
+    public static final int INVENTORY_EXIT = 3;
+
     public static void printKcsShopArt() {
         System.out.println(" _   __ _____  _____     _____  _   _  _____ ______");
         System.out.println("| | / //  __ \\/  ___|   /  ___|| | | ||  _  || ___ \\");

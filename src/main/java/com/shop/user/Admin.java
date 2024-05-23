@@ -20,14 +20,14 @@ public class Admin extends User {
             int choice = inputService.getIntInput();
 
             switch (choice) {
-                case 1:
+                case Constants.INVENTORY_ADD_ITEM:
                     inventoryService.addItemToInventory(inputService);
                     break;
-                case 2:
+                case Constants.INVENTORY_REMOVE_ITEM:
                     inventoryService.removeItemFromInventory(inputService);
                     break;
-                case 3:
-                    return;
+                case Constants.INVENTORY_EXIT:
+                    break;
                 default:
                     System.out.println(Constants.INVALID_CHOICE);
             }

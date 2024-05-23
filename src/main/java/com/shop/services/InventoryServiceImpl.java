@@ -27,17 +27,21 @@ public class InventoryServiceImpl implements InventoryService {
         int price = inputService.getIntInput();
 
         Clothes newItem;
-        if (type == 1) {
-            System.out.print(Constants.ENTER_SALE_PERCENTAGE);
-            int sale = inputService.getIntInput();
-            newItem = new ChildrenClothes(name, price, sale);
-        } else if (type == 2) {
-            newItem = new ManClothes(name, price);
-        } else if (type == 3) {
-            newItem = new WomanClothes(name, price);
-        } else {
-            System.out.println(Constants.INVALID_CHOICE);
-            return;
+        switch (type) {
+            case Constants.CHILDREN_CLOTHES:
+                System.out.print(Constants.ENTER_SALE_PERCENTAGE);
+                int sale = inputService.getIntInput();
+                newItem = new ChildrenClothes(name, price, sale);
+                break;
+            case Constants.MAN_CLOTHES:
+                newItem = new ManClothes(name, price);
+                break;
+            case Constants.WOMAN_CLOTHES:
+                newItem = new WomanClothes(name, price);
+                break;
+            default:
+                System.out.println(Constants.INVALID_CHOICE);
+                return;
         }
 
         inventoryManager.addInventoryItem(newItem);

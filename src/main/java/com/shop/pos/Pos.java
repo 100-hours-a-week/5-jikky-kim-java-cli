@@ -44,19 +44,19 @@ public class Pos {
             int choice = inputService.getIntInput();
 
             switch (choice) {
-                case 1:
+                case Constants.DISPLAY_INVENTORY:
                     inventoryService.displayInventory();
                     break;
-                case 2:
+                case Constants.ADD_ITEM_TO_CART:
                     cartService.addItemToCart(inputService);
                     break;
-                case 3:
+                case Constants.VIEW_CART:
                     cartService.viewCart();
                     break;
-                case 4:
+                case Constants.CHECKOUT:
                     cartService.checkout();
                     break;
-                case 5:
+                case Constants.MANAGE_INVENTORY:
                     if (user instanceof Admin) {
                         ((Admin) user).manageInventory(inputService, inventoryService);
                     } else {
@@ -64,7 +64,7 @@ public class Pos {
                         return;
                     }
                     break;
-                case 6:
+                case Constants.EXIT:
                     System.out.println(Constants.EXIT_MESSAGE);
                     return;
                 default:

@@ -27,7 +27,7 @@ public class Admin extends User {
                     inventoryService.removeItemFromInventory(inputService);
                     break;
                 case Constants.INVENTORY_EXIT:
-                    break;
+                    return;
                 default:
                     System.out.println(Constants.INVALID_CHOICE);
             }

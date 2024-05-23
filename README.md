@@ -38,21 +38,54 @@
 ## 클래스 설계도
 
 ### 전체
-![클래스 다이어그램](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/31dbd137-cd76-4133-a589-410cf72dafc0)
+![클래스 다이어그램](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/b96540d2-673d-4e58-9da9-b51400f7ccde)
+
+---
+
+### Main & Pos
+
+- Main 클래스는 Pos 객체를 생성하고 프로그램을 실행
+- Main 클래스는 프로그램 시작점으로, 다른 클래스 및 서비스의 설정과 초기화를 담당하게 했습니다.
+
+- Pos 클래스는  **`InventoryService`**, **`CartService`**, **`UserManager`**, **`InputService`** 사용
+- 프로그램의 주요 기능을 한 곳에서 관리할 수 있게 했습니다.
+
+![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/cee289fa-7ffc-4b35-a3fd-75ab21c55693)
+
+---
+
+### 인터페이스와 구현 클래스 
+
+<aside>
+💡 클래스가 복잡하지않은데, 인터페이스와 구현클래스를 구분한 이유
+
+</aside>
+
+원래는 인터페이스와 구현클래스를 구분하지 않았습니다.
+
+SOLID를 알게되고, 기존 코드의 Pos클래스가 InventoryService, CartService,UserManager 클래스의 구체적인 구현에 의존하고 있어서 DIP를 준수하지 않고 있다고 생각했습니다.
+
+따라서, DIP를 준수하기 위해 Pos클래스에서 사용하는 서비스들을 인터페이스로 추상화하고 구체적인 구현은 생성자 주입을 통해 주입받도록 했습니다.
+
+|![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/2ee12213-455e-4d42-8482-cc6b15a69417)|![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/ba71db32-27e0-4955-aaf5-8d3f317287cb)|
+|:---|:---|
+|![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/4cd37d75-3e10-407b-bd27-3ca485f3c3e5)|![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/1a2cf873-be5c-48b6-b418-1cef6a0c0dd6)|
+
 
 ### Clothes
 
-![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/8fcd8c45-ca82-4858-bf30-7df32996a3ad)
+![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/183438e3-1a70-491a-82ec-2de1e25df2b3)
 
+의류 항목을 공통 기능과 속성을 가진 상위 클래스와, 구체적인 특성을 가진 하위 클래스로 분리해서 유연성과 재사용성을 높입니다. 이를 통해 LSP와 OCP를 준수합니다.
 
 - 슈퍼 클래스 : Clothes , 모든 의류 항목의 공통 속성과 메서드를 정의
     - 서브 클래스
-        - Children : 어린이용 의류, **`Clothes`** 클래스를 상속받아 할인율 속성을 추가
-        - Adult : 성인용 의류
-- 슈퍼 클래스 : Adult
+        - ChildrenClothes  : 어린이용 의류, **`Clothes`** 클래스를 상속받아 할인율 속성을 추가
+        - AdultClothes  : 성인용 의류
+- 슈퍼 클래스 : AdultClothes
     - 서브 클래스
-        - Man : 남성용 의류
-        - Woman : 여성용 의류
+        - ManClothes  : 남성용 의류
+        - WomanClothes  : 여성용 의류
 
 ---
 
@@ -67,19 +100,6 @@
         - Admin : 관리자
 
 ---
-
-### Pos
-
-- Main 클래스는 Pos 객체를 생성하고 프로그램을 실행
-- Pos 클래스는  **`InventoryService`**, **`CartService`**, **`UserManager`**, **`InputService`** 사용
-
-![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/cee289fa-7ffc-4b35-a3fd-75ab21c55693)
-
-
-|![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/2ee12213-455e-4d42-8482-cc6b15a69417)|![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/ba71db32-27e0-4955-aaf5-8d3f317287cb)|
-|:---|:---|
-|![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/4cd37d75-3e10-407b-bd27-3ca485f3c3e5)|![image](https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/1a2cf873-be5c-48b6-b418-1cef6a0c0dd6)|
-
 
 
 ## 폴더 구조

@@ -1,5 +1,6 @@
 package com.shop.utils;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InputServiceImpl implements InputService {
@@ -16,7 +17,15 @@ public class InputServiceImpl implements InputService {
 
     @Override
     public int getIntInput() {
-        return scanner.nextInt();
+        while (true) {
+            try {
+                return scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println(Constants.INVALID_CHOICE);
+                System.out.print(Constants.SELECT_OPTION);
+                scanner.next();
+            }
+        }
     }
 
     public void close() {

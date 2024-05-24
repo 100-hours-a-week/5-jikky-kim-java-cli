@@ -37,6 +37,15 @@ public class Constants {
     // 사용자 로그 파일
     public static final String USER_LOG_FILE_NAME = "log/user_activity.log";
 
+    // 로그 메시지 상수
+    public static final String LOG_USER_LOGGED_IN = "User [%s] logged in.";
+    public static final String LOG_USER_VIEWED_INVENTORY = "User [%s] viewed inventory.";
+    public static final String LOG_USER_ADDED_ITEM_TO_CART = "User [%s] added item to cart.";
+    public static final String LOG_USER_VIEWED_CART = "User [%s] viewed cart.";
+    public static final String LOG_USER_CHECKED_OUT = "User [%s] checked out.";
+    public static final String LOG_ADMIN_MANAGED_INVENTORY = "Admin managed inventory.";
+    public static final String LOG_USER_EXITED = "User [%s] exited.";
+
     //    메뉴
     public static final int DISPLAY_INVENTORY = 1;
     public static final int ADD_ITEM_TO_CART = 2;

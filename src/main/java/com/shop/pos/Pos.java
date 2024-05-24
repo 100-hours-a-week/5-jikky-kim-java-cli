@@ -31,7 +31,7 @@ public class Pos {
         String password = inputService.getInput();
         User user = userService.login(username, password);
         if (user != null) {
-            logService.log("User " + "[" + username + "]" + " logged in.");
+            logService.log(String.format(Constants.LOG_USER_LOGGED_IN, username));
         }
         return user;
     }
@@ -55,32 +55,33 @@ public class Pos {
             switch (choice) {
                 case Constants.DISPLAY_INVENTORY:
                     inventoryService.displayInventory();
-                    logService.log("User  [" + username + "]  viewed inventory");
+                    logService.log(String.format(Constants.LOG_USER_VIEWED_INVENTORY, username));
                     break;
                 case Constants.ADD_ITEM_TO_CART:
                     cartService.addItemToCart(inputService);
-                    logService.log("User  [" + username + "]  added item to cart");
+                    logService.log(String.format(Constants.LOG_USER_ADDED_ITEM_TO_CART, username));
                     break;
                 case Constants.VIEW_CART:
                     cartService.viewCart();
-                    logService.log("User  [" + username + "]  viewed cart");
+                    logService.log(String.format(Constants.LOG_USER_VIEWED_CART, username));
                     break;
                 case Constants.CHECKOUT:
                     cartService.checkout();
-                    logService.log("User  [" + username + "]  checked out");
+                    logService.log(String.format(Constants.LOG_USER_CHECKED_OUT, username));
                     break;
                 case Constants.MANAGE_INVENTORY:
                     if (user instanceof Admin) {
                         ((Admin) user).manageInventory(inputService, inventoryService);
-                        logService.log("Admin managed inventory");
+                        logService.log(Constants.LOG_ADMIN_MANAGED_INVENTORY);
                     } else {
                         System.out.println(Constants.EXIT_MESSAGE);
+                        logService.log(String.format(Constants.LOG_USER_EXITED, username));
                         return;
                     }
                     break;
                 case Constants.EXIT:
                     System.out.println(Constants.EXIT_MESSAGE);
-                    logService.log("User  [" + username + "]  exited.");
+                    logService.log(String.format(Constants.LOG_USER_EXITED, username));
                     return;
                 default:
                     System.out.println(Constants.INVALID_CHOICE);

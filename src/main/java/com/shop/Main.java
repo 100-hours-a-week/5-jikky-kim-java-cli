@@ -7,7 +7,6 @@ import com.shop.shared.SharedResource;
 import com.shop.user.User;
 import com.shop.utils.Constants;
 import com.shop.utils.InputServiceImpl;
-import com.shop.utils.InputService;
 import com.shop.managers.InventoryManager;
 import com.shop.managers.CartManager;
 import com.shop.managers.UserManager;
@@ -18,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
         Constants.printKcsShopArt();
 
-        InputService inputService = new InputServiceImpl();
+        InputServiceImpl inputService = new InputServiceImpl();
         InventoryManager inventoryManager = new InventoryManager();
         CartManager cartManager = new CartManager();
         UserManager userManager = new UserManager();
@@ -29,7 +28,7 @@ public class Main {
 
         SharedResource sharedResource = new SharedResource();
 
-        LogService logService = null;
+        LogService logService;
         try {
             logService = new LogService(Constants.USER_LOG_FILE_NAME,sharedResource);
         } catch (IOException e) {
@@ -48,7 +47,7 @@ public class Main {
         } while (user == null);
         pos.showMenu(user);
 
-        ((InputServiceImpl) inputService).close();
+        inputService.close();
         logService.close();
     }
 }

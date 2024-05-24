@@ -34,6 +34,9 @@ public class Constants {
     public static final String ITEM_REMOVED_FROM_INVENTORY = "Item removed from inventory.";
     public static final String INVALID_CHOICE = "Invalid choice. Please try again.";
 
+    // 사용자 로그 파일
+    public static final String USER_LOG_FILE_NAME = "log/user_activity.log";
+
     //    메뉴
     public static final int DISPLAY_INVENTORY = 1;
     public static final int ADD_ITEM_TO_CART = 2;
@@ -51,6 +54,7 @@ public class Constants {
     public static final int INVENTORY_ADD_ITEM = 1;
     public static final int INVENTORY_REMOVE_ITEM = 2;
     public static final int INVENTORY_EXIT = 3;
+
 
     public static void printKcsShopArt() {
         System.out.println(" _   __ _____  _____     _____  _   _  _____ ______");

@@ -2,6 +2,7 @@ package com.shop.pos;
 
 import com.shop.services.CartService;
 import com.shop.services.InventoryService;
+import com.shop.services.LogService;
 import com.shop.services.UserService;
 import com.shop.user.Admin;
 import com.shop.user.User;
@@ -13,12 +14,14 @@ public class Pos {
     private final CartService cartService;
     private final UserService userService;
     private final InputService inputService;
+    private final LogService logService;
 
-    public Pos(InputService inputService, InventoryService inventoryService, CartService cartService, UserService userService) {
+    public Pos(InputService inputService, InventoryService inventoryService, CartService cartService, UserService userService, LogService logService) {
         this.inventoryService = inventoryService;
         this.cartService = cartService;
         this.userService = userService;
         this.inputService = inputService;
+        this.logService = logService;
     }
 
     public User login() {
@@ -26,11 +29,16 @@ public class Pos {
         String username = inputService.getInput();
         System.out.print(Constants.ENTER_PASSWORD);
         String password = inputService.getInput();
-        return userService.login(username, password);
+        User user = userService.login(username, password);
+        if (user != null) {
+            logService.log("User " + "[" + username + "]" + " logged in.");
+        }
+        return user;
     }
 
     public void showMenu(User user) {
         boolean continueMenu = true;
+        String username = user.getUsername();
         while (continueMenu) {
             System.out.println(Constants.WELCOME_MESSAGE);
             System.out.println(Constants.DEVIDE_LINE);
@@ -47,19 +55,24 @@ public class Pos {
             switch (choice) {
                 case Constants.DISPLAY_INVENTORY:
                     inventoryService.displayInventory();
+                    logService.log("User  [" + username + "]  viewed inventory");
                     break;
                 case Constants.ADD_ITEM_TO_CART:
                     cartService.addItemToCart(inputService);
+                    logService.log("User  [" + username + "]  added item to cart");
                     break;
                 case Constants.VIEW_CART:
                     cartService.viewCart();
+                    logService.log("User  [" + username + "]  viewed cart");
                     break;
                 case Constants.CHECKOUT:
                     cartService.checkout();
+                    logService.log("User  [" + username + "]  checked out");
                     break;
                 case Constants.MANAGE_INVENTORY:
                     if (user instanceof Admin) {
                         ((Admin) user).manageInventory(inputService, inventoryService);
+                        logService.log("Admin managed inventory");
                     } else {
                         System.out.println(Constants.EXIT_MESSAGE);
                         return;
@@ -67,7 +80,8 @@ public class Pos {
                     break;
                 case Constants.EXIT:
                     System.out.println(Constants.EXIT_MESSAGE);
-                    continueMenu=false;
+                    logService.log("User  [" + username + "]  exited.");
+                    return;
                 default:
                     System.out.println(Constants.INVALID_CHOICE);
             }

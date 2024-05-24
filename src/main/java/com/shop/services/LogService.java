@@ -32,11 +32,11 @@ public class LogService {
                     writer.flush();
                     sharedResource.updateLog(); // 로그 업데이트 알림
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    e.getStackTrace();
                 }
             }).get(); // 동기적으로 실행되도록 변경
         } catch (Exception e) {
-            e.printStackTrace();
+            e.getStackTrace();
         }
     }
 
@@ -48,7 +48,7 @@ public class LogService {
             }
             writer.close();
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            e.getStackTrace();
         }
     }
 }

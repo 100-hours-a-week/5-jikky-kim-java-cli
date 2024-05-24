@@ -30,7 +30,8 @@ public class Pos {
     }
 
     public void showMenu(User user) {
-        while (true) {
+        boolean continueMenu = true;
+        while (continueMenu) {
             System.out.println(Constants.WELCOME_MESSAGE);
             System.out.println(Constants.DEVIDE_LINE);
             System.out.println(Constants.MAIN_MENU_OPTIONS);
@@ -66,7 +67,7 @@ public class Pos {
                     break;
                 case Constants.EXIT:
                     System.out.println(Constants.EXIT_MESSAGE);
-                    return;
+                    continueMenu=false;
                 default:
                     System.out.println(Constants.INVALID_CHOICE);
             }

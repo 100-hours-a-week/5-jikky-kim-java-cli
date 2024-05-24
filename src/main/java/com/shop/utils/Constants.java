@@ -29,7 +29,6 @@ public class Constants {
     public static final String ENTER_PRICE_OF_ITEM = "Enter the price of the item: ";
     public static final String ENTER_SALE_PERCENTAGE = "Enter the sale percentage: ";
     public static final String ITEM_ADDED_TO_INVENTORY = "Item added to inventory.";
-    public static final String ITEM_NOT_ADDED = "Invalid type. Item not added.";
     public static final String ENTER_ITEM_NUMBER_TO_REMOVE = "Enter the item number to remove from inventory: ";
     public static final String ITEM_REMOVED_FROM_INVENTORY = "Item removed from inventory.";
     public static final String INVALID_CHOICE = "Invalid choice. Please try again.";
@@ -45,6 +44,8 @@ public class Constants {
     public static final String LOG_USER_CHECKED_OUT = "User [%s] checked out.";
     public static final String LOG_ADMIN_MANAGED_INVENTORY = "Admin managed inventory.";
     public static final String LOG_USER_EXITED = "User [%s] exited.";
+    public static final String LOG_UPDATE_NOTIFY = "\uD83D\uDCE2Log updated. Monitor thread notified.\uD83D\uDCE2";
+    public static final String LOG_EMPTY = "";
 
     //    메뉴
     public static final int DISPLAY_INVENTORY = 1;

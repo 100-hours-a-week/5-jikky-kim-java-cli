@@ -30,11 +30,11 @@ public class LogService {
                     writer.write(timeStamp + " - " + message);
                     writer.newLine();
                     writer.flush();
-                    sharedResource.updateLog(); // 로그 업데이트 알림
+                    sharedResource.updateLog();
                 } catch (IOException e) {
                     e.getStackTrace();
                 }
-            }).get(); // 동기적으로 실행되도록 변경
+            }).get();
         } catch (Exception e) {
             e.getStackTrace();
         }

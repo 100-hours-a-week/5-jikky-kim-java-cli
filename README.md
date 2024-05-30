@@ -377,3 +377,320 @@ https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/3b78864d-7045-4
 
 https://github.com/jjikky/clothing-shop-java-cli/assets/59151187/80c251ef-fc2c-412d-a878-dce0e3c6ef2e
 
+---
+
+## 스레드 추가
+
+## 스레드를 이용한 유저 로그 구현
+
+스레드를 이용해서 프로그램의 메인 흐름과 관계없이 비동기적으로 로그 생성
+
+**Pos class**
+
+```java
+// Pos class의 showMenu() 중 메뉴 선택 부분
+switch (choice) {
+                case Constants.DISPLAY_INVENTORY:
+                    inventoryService.displayInventory();
+                    logService.log(String.format(Constants.LOG_USER_VIEWED_INVENTORY, username));
+                    break;
+                case Constants.ADD_ITEM_TO_CART:
+                    cartService.addItemToCart(inputService);
+                    logService.log(String.format(Constants.LOG_USER_ADDED_ITEM_TO_CART, username));
+                    break;
+                case Constants.VIEW_CART:
+                    cartService.viewCart();
+                    logService.log(String.format(Constants.LOG_USER_VIEWED_CART, username));
+                    break;
+                case Constants.CHECKOUT:
+                    cartService.checkout();
+                    logService.log(String.format(Constants.LOG_USER_CHECKED_OUT, username));
+                    break;
+                case Constants.MANAGE_INVENTORY:
+                    if (user instanceof Admin) {
+                        ((Admin) user).manageInventory(inputService, inventoryService);
+                        logService.log(Constants.LOG_ADMIN_MANAGED_INVENTORY);
+                    } else {
+                        System.out.println(Constants.EXIT_MESSAGE);
+                        logService.log(String.format(Constants.LOG_USER_EXITED, username));
+                        return;
+                    }
+                    break;
+                case Constants.EXIT:
+                    System.out.println(Constants.EXIT_MESSAGE);
+                    logService.log(String.format(Constants.LOG_USER_EXITED, username));
+                    return;
+                default:
+                    System.out.println(Constants.INVALID_CHOICE);
+            }
+```
+
+### 2. 로그 작업 처리
+
+**`ExecutorService`**
+
+- 로그 작업을 관리하고, 프로그램 종료 시 모든 로그 작업이 완료된 후 스트림닫음
+- 스레드를 생성해서 작업을 처리하고, 처리가 완료되면 해당 스레드를 제거하는 작업에 이용
+- `log(String message)`
+    - 로그 메세지 기록
+    
+- `close()`
+    - ExecutorService 종료 후 BufferedWriter를 닫음
+    - ExecutorService 작업이 5초가 지나도 안끝나면 강제 종료
+
+**LogService class**
+
+```java
+package com.shop.services;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+public class LogService {
+    private final BufferedWriter writer;
+    private final ExecutorService executor;
+
+    public LogService(String logFileName) throws IOException {
+        writer = new BufferedWriter(new FileWriter(logFileName, true));
+        executor = Executors.newSingleThreadExecutor();
+    }
+
+    public void log(String message) {
+        executor.submit(() -> {
+            try {
+                String timeStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                writer.write(timeStamp + " - " + message);
+                writer.newLine();
+                writer.flush();
+            } catch (IOException e) {
+                e.getStackTrace();
+            }
+        });
+    }
+
+    public void close() {
+        executor.shutdown();
+        try {
+            if (!executor.awaitTermination(5, TimeUnit.SECONDS)) {
+                executor.shutdownNow();
+            }
+            writer.close();
+        } catch (IOException | InterruptedException e) {
+            e.getStackTrace();
+        }
+    }
+}
+```
+
+### 실행 결과 생성되는 로그
+
+**user_activity.log**
+
+```java
+2024-05-24 11:58:39 - User [admin] logged in.
+2024-05-24 11:58:40 - User  [admin]  viewed inventory
+2024-05-24 11:58:46 - User  [admin]  added item to cart
+2024-05-24 11:58:48 - User  [admin]  viewed cart
+2024-05-24 11:58:49 - User  [admin]  checked out
+2024-05-24 11:58:51 - User  [admin]  exited.
+2024-05-24 13:36:19 - User [customer] logged in.
+2024-05-24 13:36:22 - User  [customer]  viewed inventory
+2024-05-24 13:36:26 - User  [customer]  added item to cart
+2024-05-24 13:36:28 - User  [customer]  added item to cart
+2024-05-24 13:36:29 - User  [customer]  added item to cart
+2024-05-24 13:36:31 - User  [customer]  viewed inventory
+2024-05-24 13:36:31 - User  [customer]  exited.
+```
+
+---
+
+## 스레드간 상호작용할 수 있는 기능 구현 
+
+<aside>
+💡 **LogService**가 로그를 기록하면 **SharedResource**를 통해 **LogMonitorThread**에게 알리고 사용자에게 실시간 알
+
+</aside>
+
+### LogService
+
+- **`log`** 메서드가 호출될 때마다 로그 메시지를 파일에 기록
+- 로그가 업데이트되면 `SharedResource`의 `updateLog` 메서드를 호출
+
+```java
+ public void log(String message) {
+        try {
+            executor.submit(() -> {
+                try {
+                    String timeStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                    writer.write(timeStamp + " - " + message);
+                    writer.newLine();
+                    writer.flush();
+                    sharedResource.updateLog();
+                } catch (IOException e) {
+                    e.getStackTrace();
+                }
+            }).get();
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+    }
+```
+
+### SharedResource
+
+- `updateLog` 메서드가 호출되면 **`logUpdated`** 플래그를 **true**로 설정하고 `notify`를 호출하여 대기 중인 스레드를 깨움
+- `waitForLogUpdate` 메서드는 `logUpdated` 플래그가 `true`가 될 때까지 대기
+    - 이 메서드는 `LogMonitorThread`에서 호출
+
+```java
+package com.shop.shared;
+
+public class SharedResource {
+    private boolean logUpdated = false;
+
+    public synchronized void updateLog() {
+        logUpdated = true;
+        // wait() 상태에서 대기 중인 스레드 중 하나를 깨움
+        notify();
+    }
+
+    public synchronized void waitForLogUpdate() throws InterruptedException {
+        while (!logUpdated) {
+            // logUpdated가 true가 될 때까지 대기
+            wait();
+        }
+        // logUpdated 상태를 리셋
+        logUpdated = false;
+    }
+}
+
+```
+
+### **LogMonitorThread**
+
+- `run` 메서드에서 무한 루프로 `waitForLogUpdate`를 호출하여 로그 업데이트를 대기
+- 로그가 업데이트되면 `SharedResource`의 **`waitForLogUpdate`** 메서드가 반환되고, 콘솔에 로그 업데이트 메시지를 출력
+
+```java
+package com.shop.monitor;
+
+import com.shop.shared.SharedResource;
+import com.shop.utils.Constants;
+
+public class LogMonitorThread extends Thread {
+    private final SharedResource sharedResource;
+
+    public LogMonitorThread(SharedResource sharedResource) {
+        this.sharedResource = sharedResource;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                sharedResource.waitForLogUpdate();
+                System.out.println(Constants.LOG_EMPTY);
+                System.out.println(Constants.LOG_UPDATE_NOTIFY);
+                System.out.println(Constants.LOG_EMPTY);
+            } catch (InterruptedException e) {
+                e.getStackTrace();
+            }
+        }
+    }
+}
+
+```
+
+### Main
+
+```java
+package com.shop;
+
+import com.shop.monitor.LogMonitorThread;
+import com.shop.pos.Pos;
+import com.shop.services.*;
+import com.shop.shared.SharedResource;
+import com.shop.user.User;
+import com.shop.utils.Constants;
+import com.shop.utils.InputServiceImpl;
+import com.shop.managers.InventoryManager;
+import com.shop.managers.CartManager;
+import com.shop.managers.UserManager;
+
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+        Constants.printKcsShopArt();
+
+        InputServiceImpl inputService = new InputServiceImpl();
+        InventoryManager inventoryManager = new InventoryManager();
+        CartManager cartManager = new CartManager();
+        UserManager userManager = new UserManager();
+
+        InventoryService inventoryService = new InventoryServiceImpl(inventoryManager);
+        CartService cartService = new CartServiceImpl(cartManager, inventoryManager);
+        UserService userService = new UserServiceImpl(userManager);
+
+        SharedResource sharedResource = new SharedResource();
+
+        LogService logService;
+        try {
+            logService = new LogService(Constants.USER_LOG_FILE_NAME,sharedResource);
+        } catch (IOException e) {
+            e.getStackTrace();
+            return;
+        }
+
+        LogMonitorThread logMonitorThread = new LogMonitorThread(sharedResource);
+        logMonitorThread.start();
+
+        Pos pos = new Pos(inputService, inventoryService, cartService, userService,logService);
+
+        User user;
+        do {
+            user = pos.login();
+        } while (user == null);
+        pos.showMenu(user);
+
+        inputService.close();
+        logService.close();
+    }
+}
+
+```
+
+### 구현 결과
+
+
+
+https://github.com/jjikky/5-jikky-kim-java-cli/assets/59151187/3a341c18-c2d7-4df3-9b04-e2f2aa8bef47
+
+
+
+- 관리자 메뉴를 제외한 모든 메뉴를 선택시 `LogService`에서 스레드를 이용해 파일에 로그를 기록합니다.
+- 로그가 업데이트되면 `SharedResource`의 `updateLog` 메서드를 호출해서 로그가 업데이트 되었음을 `LogMonitorThread`에 알립니다.
+- 로그가 업데이트 되기를 기다리고 있다가 LogMonitorThread가 업데이트 됨을 감지하면, 콘솔에  📢`Log updated. Monitor thread notified.`📢 를 출력합니다.
+
+
+시연 영상 결과 생성된 로그
+
+```java
+2024-05-24 23:11:24 - User [admin] logged in.
+2024-05-24 23:11:26 - User [admin] viewed inventory.
+2024-05-24 23:11:33 - User [admin] added item to cart.
+2024-05-24 23:11:37 - User [admin] added item to cart.
+2024-05-24 23:11:43 - User [admin] viewed cart.
+2024-05-24 23:11:48 - User [admin] checked out.
+2024-05-24 23:12:09 - Admin managed inventory.
+2024-05-24 23:12:11 - User [admin] viewed inventory.
+2024-05-24 23:12:24 - Admin managed inventory.
+2024-05-24 23:12:29 - User [admin] viewed inventory.
+2024-05-24 23:12:33 - User [admin] exited.
+```
